@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 동료 유형</title>
+<meta name="description" content="신입 동료 굿균의 한 달, 12장면. AI를 대하는 나의 자세를 네 글자 유형으로. 지금의 나와 되고 싶은 나, 우리 센터 유형까지.">
+<meta property="og:title" content="AI 동료 유형 — 나는 어떤 선배일까?">
+<meta property="og:description" content="신입 동료 굿균의 한 달 12장면으로 보는 AI를 대하는 나의 자세. 16유형.">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --green:#1F9D5C; --red:#E63946;
+  --bg:#F4F7FC; --surface:#FFFFFF; --line:#D5DDEC; --soft:#EEF3FB;
+  --text:#1A2B50; --muted:#5B6885;
+  --amber:#8A5A00; --amber-bg:#FFF4D6; --amber-line:#E5B93C;
+  --mint-bg:#E9F7EF; --mint-line:#BFE6CF; --gold:#F2B705;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#9DB8F0; --green:#5CCB8F; --red:#FF7B76;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73; --soft:#1C2D5E;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420;
+    --mint-bg:#143A2A; --mint-line:#2E6B4E;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:17px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
+a{color:var(--blue)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.page{max-width:640px;margin:0 auto;padding:16px 16px 40px;min-height:100vh;display:flex;flex-direction:column}
+header.top{display:flex;gap:12px;align-items:center}
+header.top img{width:56px;height:auto;flex:none}
+h1{margin:0;font-size:1.35rem;line-height:1.25}
+.sub{margin:0;color:var(--muted);font-size:.88rem}
+.view{display:none;flex:1}
+.view.on{display:block}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:18px;margin:14px 0 0}
+.btn{min-height:50px;padding:0 18px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:1rem;width:100%}
+.btn.main{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.sm{min-height:42px;font-size:.9rem;width:auto;padding:0 14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.row .btn{flex:1 1 140px;width:auto}
+.hero{text-align:center;padding:24px 18px}
+.hero img{width:150px;height:auto}
+.hero h2{margin:10px 0 6px;font-size:1.45rem;line-height:1.3}
+.hero p{margin:6px 0;color:var(--muted)}
+.axes{display:grid;gap:8px;margin-top:12px}
+.axes div{display:grid;grid-template-columns:52px 1fr 1fr;gap:8px;align-items:center;font-size:.85rem;padding:8px 10px;border-radius:12px;background:var(--soft)}
+.axes b{font-size:.95rem}
+.axes span{color:var(--muted)}
+/* 장면 */
+.prog{display:flex;gap:4px;margin:14px 0 0}
+.prog i{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.prog i.d{background:var(--blue)}
+.prog i.now{background:var(--navy);outline:2px solid var(--blue);outline-offset:1px}
+.scene{position:relative;margin-top:14px;padding:18px 18px 18px;background:var(--surface);border:1.5px solid var(--line);border-radius:18px}
+.scene .no{font-size:.78rem;font-weight:800;color:var(--blue);letter-spacing:.04em}
+.scene h2{margin:4px 0 8px;font-size:1.3rem}
+.scene .talk{display:flex;gap:12px;align-items:flex-start}
+.scene .talk img{width:72px;height:auto;flex:none;margin-top:-4px}
+.scene .talk p{margin:0;padding:12px 14px;border-radius:16px;background:var(--soft);font-size:1.02rem;line-height:1.55}
+.scene .ask{margin:14px 0 8px;font-weight:700;color:var(--muted);font-size:.9rem}
+.scene.wish{border-color:var(--gold)}
+.scene.wish .no{color:#B07200}
+.ch{display:grid;gap:8px}
+.ch button{text-align:left;padding:13px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-size:.98rem;line-height:1.45;font-weight:600}
+.ch button:hover{border-color:var(--blue)}
+.ch button.prev{border-style:dashed;color:var(--muted);font-weight:500}
+.ch button.prev::after{content:" (지난번 답)";font-size:.8rem}
+.back{margin-top:10px;background:none;border:0;color:var(--muted);text-decoration:underline;text-underline-offset:3px;font-size:.9rem;padding:4px}
+/* 결과 */
+.type{font-family:"Pretendard",sans-serif;font-size:2.6rem;font-weight:900;letter-spacing:.14em;color:var(--blue);line-height:1.1;margin:0}
+.tname{font-size:1.5rem;font-weight:800;margin:4px 0 2px}
+.tline{color:var(--muted);margin:0 0 12px}
+.bars{display:grid;gap:10px;margin:14px 0}
+.bar{display:grid;grid-template-columns:38px 1fr 38px;gap:8px;align-items:center;font-size:.86rem}
+.bar .l,.bar .r{font-weight:800;text-align:center}
+.bar .l.on,.bar .r.on{color:var(--blue)}
+.bar .t{position:relative;height:16px;border-radius:8px;background:var(--line);overflow:hidden}
+.bar .t i{position:absolute;top:0;height:100%;background:var(--blue);border-radius:8px}
+.bar small{display:block;text-align:center;color:var(--muted);font-weight:400;font-size:.72rem}
+.bar.chg .t i{background:var(--gold)}
+.bar.chg .l.on,.bar.chg .r.on{color:#B07200}
+.gc{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px;border-radius:14px;background:var(--mint-bg);border:1.5px solid var(--mint-line)}
+.gc img{width:52px;flex:none}
+.gc p{margin:0;font-size:.95rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.two>div{padding:10px 12px;border-radius:12px;background:var(--soft);font-size:.9rem}
+.two h4{margin:0 0 4px;font-size:.85rem;color:var(--muted)}
+.two ul{margin:0;padding-left:1.1rem}
+.cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;text-align:center;margin-top:8px}
+.cmp .type{font-size:1.8rem}
+.cmp .arrow{font-size:1.6rem;color:var(--muted)}
+.cmp small{display:block;color:var(--muted);font-size:.8rem}
+.cmp .tn{font-weight:800}
+.hist{margin-top:14px;font-size:.88rem;color:var(--muted)}
+.hist table{width:100%;border-collapse:collapse;margin-top:6px}
+.hist td,.hist th{padding:5px 4px;border-bottom:1px solid var(--line);text-align:center;font-size:.85rem}
+.hist th{color:var(--muted);font-weight:600}
+.ask2{margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:.95rem}
+canvas{display:none}
+/* 기관 */
+.pick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.pick button{min-height:54px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:800;font-size:1.15rem}
+.pick button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.pick small{display:block;font-weight:500;font-size:.7rem;color:inherit;opacity:.8}
+.list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.list span{padding:4px 10px;border-radius:999px;background:var(--soft);font-weight:700;letter-spacing:.08em;font-size:.9rem}
+.list span b{margin-left:4px;color:var(--muted);font-weight:400;letter-spacing:0;cursor:pointer}
+footer{margin-top:24px;padding-top:12px;border-top:1.5px solid var(--line);color:var(--muted);font-size:.8rem}
+footer p{margin:2px 0}
+.note{font-size:.85rem;color:var(--muted);margin:8px 0 0}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <img src="img/hello.png" alt="굿균" width="56">
+    <div><h1>AI 동료 유형</h1><p class="sub">신입 동료 굿균의 한 달 — 나는 어떤 선배일까?</p></div>
+  </header>
+
+  <!-- 시작 -->
+  <section class="view on" id="v-intro">
+    <div class="card hero">
+      <img src="img/hello.png" alt="">
+      <h2>우리 센터에 신입 동료가 왔어요.<br>이름은 굿균, AI예요.</h2>
+      <p>성실하고 아는 건 많은데, 우리 센터 일은 처음이에요.<br>한 달 동안 12장면. 당신은 어떤 선배인가요?</p>
+      <button class="btn main" id="btnStart" type="button" style="margin-top:10px">시작하기 (3분)</button>
+      <p class="note">정답은 없어요. 이름도, 저장도 없어요. 결과는 이 폰에만 남아요.</p>
+    </div>
+    <div class="card">
+      <b>네 가지 축으로 네 글자</b>
+      <div class="axes" id="axesIntro"></div>
+    </div>
+    <div class="card" id="histCard" hidden>
+      <b>이 폰에 남은 지난 결과</b>
+      <div class="hist" id="histIntro"></div>
+      <div class="row"><button class="btn sm" id="btnOrgGo" type="button">우리 센터 유형 모으기</button><button class="btn sm" id="btnAboutGo" type="button">이 도구는</button><button class="btn sm" id="btnHistClear" type="button">지난 결과 지우기</button></div>
+    </div>
+    <div class="card" id="noHist">
+      <div class="row" style="margin-top:0"><button class="btn sm" id="btnOrgGo2" type="button">우리 센터 유형 모으기</button><button class="btn sm" id="btnAboutGo2" type="button">이 도구는</button></div>
+    </div>
+  </section>
+
+  <!-- 장면 -->
+  <section class="view" id="v-scene">
+    <div class="prog" id="prog"></div>
+    <div id="sceneBox"></div>
+  </section>
+
+  <!-- 결과 -->
+  <section class="view" id="v-result">
+    <div class="card" id="resultBox"></div>
+    <div class="card" id="wishAsk">
+      <b>한 번 더, 이번엔 「앞으로는 이렇게 하고 싶다」로</b>
+      <p class="sub" style="margin:6px 0 10px">같은 12장면을 빠르게 다시 골라요. 지금의 나와 되고 싶은 나가 다른지 봐요. 지난번 고른 답은 점선으로 보여요.</p>
+      <button class="btn main" id="btnWish" type="button">되고 싶은 나 고르기</button>
+      <button class="btn" id="btnSkipWish" type="button" style="margin-top:8px">이번엔 여기까지</button>
+    </div>
+    <div id="cmpBox"></div>
+    <div class="card" id="afterBox">
+      <div class="row" style="margin-top:0">
+        <button class="btn sm main" id="btnCard" type="button">결과 카드 저장</button>
+        <button class="btn sm" id="btnCopy" type="button">글로 복사</button>
+        <button class="btn sm" id="btnOrgGo3" type="button">우리 센터 유형 모으기</button>
+        <button class="btn sm" id="btnRestart" type="button">처음으로</button>
+      </div>
+      <p class="note" id="copyNote"></p>
+      <p class="ask2">한 달 뒤에 다시 해 보세요. 그때의 「지금」이 오늘의 「앞으로」와 같은지 — 이 폰에 남아 있어요.</p>
+    </div>
+  </section>
+
+  <!-- 우리 센터 -->
+  <section class="view" id="v-org">
+    <div class="card">
+      <b>우리 센터 유형 모으기</b>
+      <p class="sub" style="margin:6px 0 0">각자 결과 네 글자를 말하면, 한 사람씩 눌러 넣어요. 이름은 안 받아요. 숫자만 세요.</p>
+      <div class="pick" id="pick"></div>
+      <div class="row"><button class="btn main" id="btnAddPerson" type="button" disabled>이 사람 넣기</button></div>
+      <div class="list" id="people"></div>
+      <p class="note" id="orgCount"></p>
+    </div>
+    <div class="card" id="orgResult" hidden></div>
+    <div class="card"><div class="row" style="margin-top:0"><button class="btn sm" id="btnOrgClear" type="button">모은 것 지우기</button><button class="btn sm" id="btnOrgBack" type="button">처음으로</button></div><p class="note">모은 글자는 이 브라우저에만 남아요. 강의 끝나면 지워 주세요.</p></div>
+  </section>
+
+  <!-- 안내 -->
+  <section class="view" id="v-about">
+    <div class="card">
+      <b>이 도구는</b>
+      <p>AI를 「쓰는 법」이 아니라 AI를 「대하는 자세」를 보는 도구예요. 신입 동료를 어떻게 대하는지는 누구나 몸으로 알아서, AI를 성실하지만 우리 센터 일은 처음인 신입 동료로 두고 열두 장면을 겪어 봐요.</p>
+      <ul style="padding-left:1.2rem">
+        <li><b>정답이 없어요.</b> 16유형 어느 것도 옳거나 틀리지 않아요. 좋은 점과 조심할 점만 적었어요. 결론은 각자가 내요.</li>
+        <li><b>세 번 봐요.</b> 지금의 나 → 되고 싶은 나 → 한 달 뒤의 나. 바뀐 축이 곧 이야기할 거리예요.</li>
+        <li><b>우리 센터 유형</b>은 각자 네 글자를 모아 축마다 다수결. 센터가 함께 이야기 나누는 시작점이에요.</li>
+        <li><b>저장하지 않아요.</b> 서버가 없고, 이름을 받지 않아요. 결과는 이 브라우저에만 남고 「지난 결과 지우기」로 지워져요.</li>
+        <li>자활전문강사 김태균의 「AI야~ 넌 나(우리)에게 무엇을 줄 수 있니?」 이야기 자리에서 함께 써요. 혼자 해 봐도 돼요.</li>
+      </ul>
+      <p class="sub">만든 사람의 다른 도구: <a href="https://jahwalktg.github.io/jahwal-tools/" target="_blank" rel="noopener">지역자활센터 업무 도구</a> · <a href="https://jahwalktg.github.io/gukgicho/" target="_blank" rel="noopener">국기초 가늠표</a> · <a href="https://jahwalktg.github.io/jahwal-start/" target="_blank" rel="noopener">어서와, 자활은 처음이지?</a></p>
+      <div class="row"><button class="btn sm" id="btnAboutBack" type="button">처음으로</button></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>AI 동료 유형 · 자활전문강사 김태균 · 굿균은 화면 속에만 있어요. 판단은 사람이 해요.</p>
+    <p>의견 <a href="mailto:jahwalktg@gmail.com?subject=AI%20%EB%8F%99%EB%A3%8C%20%EC%9C%A0%ED%98%95%20%EC%9D%98%EA%B2%AC">jahwalktg@gmail.com</a></p>
+  </footer>
+</div>
+<canvas id="cv" width="1080" height="1350"></canvas>
+
+<script src="data.js?v=1"></script>
+<script>
+(function(){
+  'use strict';
+  var B=window.BUDDY,$=function(id){return document.getElementById(id);};
+  var AX={};B.axes.forEach(function(a){AX[a.k]=a;});
+  var HK='ai-buddy.history.v1',OK='ai-buddy.org.v1';
+  function load(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function today(){var d=new Date();return d.getFullYear()+'.'+(d.getMonth()+1)+'.'+d.getDate();}
+
+  var hist=load(HK,[]);
+  function go(v){document.querySelectorAll('.view').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v);});window.scrollTo(0,0);}
+
+  /* 시작 화면 */
+  $('axesIntro').innerHTML=B.axes.map(function(a){return '<div><b>'+a.a+' / '+a.b+'</b><span>'+a.name+' — '+a.q+'</span><span>'+a.aName+' ↔ '+a.bName+'</span></div>';}).join('');
+  function renderHist(){
+    if(!hist.length){$('histCard').hidden=true;$('noHist').hidden=false;return;}
+    $('histCard').hidden=false;$('noHist').hidden=true;
+    $('histIntro').innerHTML='<table><tr><th>날짜</th><th>지금의 나</th><th>되고 싶은 나</th></tr>'+hist.slice(-5).reverse().map(function(h){return '<tr><td>'+esc(h.d)+'</td><td><b>'+h.now+'</b> '+esc(B.types[h.now].name)+'</td><td>'+(h.wish?'<b>'+h.wish+'</b> '+esc(B.types[h.wish].name):'—')+'</td></tr>';}).join('')+'</table>';
+  }
+  renderHist();
+
+  /* 장면 진행 */
+  var mode='now',answers={},prevAns=null,idx=0;
+  var order={}; // 장면마다 선택지 섞기(한 번 정하면 같은 세션에서 유지)
+  function shuffled(sc){if(!order[sc.n]){var a=sc.c.map(function(c,i){return i;});for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}order[sc.n]=a;}return order[sc.n].map(function(i){return sc.c[i];});}
+  function start(m){mode=m;idx=0;if(m==='now'){answers={};prevAns=null;}else{prevAns=answers;answers={};}go('scene');renderScene();}
+  function renderScene(){
+    var sc=B.scenes[idx];
+    $('prog').innerHTML=B.scenes.map(function(s,i){return '<i class="'+(i<idx?'d':i===idx?'now':'')+'"></i>';}).join('');
+    var h='<div class="scene'+(mode==='wish'?' wish':'')+'"><div class="no">'+(mode==='wish'?'되고 싶은 나 · ':'')+'장면 '+sc.n+' / 12 · '+AX[sc.axis].name+'</div><h2>'+esc(sc.t)+'</h2>';
+    h+='<div class="talk"><img src="img/'+sc.face+'.png" alt=""><p>'+esc(sc.s)+'</p></div>';
+    h+='<p class="ask">'+(mode==='wish'?'앞으로는 이렇게 하고 싶어요':'지금 나는 실제로 이렇게 해요')+'</p><div class="ch">';
+    shuffled(sc).forEach(function(c){var isPrev=prevAns&&prevAns[sc.n]===c[1];h+='<button type="button" data-side="'+c[0]+'" data-t="'+esc(c[1])+'"'+(isPrev?' class="prev"':'')+'>'+esc(c[1])+'</button>';});
+    h+='</div>'+(idx>0?'<button class="back" type="button" id="btnBack">← 앞 장면</button>':'')+'</div>';
+    $('sceneBox').innerHTML=h;
+    $('sceneBox').querySelectorAll('.ch button').forEach(function(b){b.onclick=function(){answers[sc.n]=b.dataset.t;answers['s'+sc.n]=b.dataset.side;idx++;if(idx>=B.scenes.length)finish();else renderScene();};});
+    var bk=$('btnBack');if(bk)bk.onclick=function(){idx--;renderScene();};
+  }
+  function calc(ans){
+    var r={};B.axes.forEach(function(a){r[a.k]={a:0,b:0};});
+    B.scenes.forEach(function(sc){var s=ans['s'+sc.n];if(!s)return;if(s===AX[sc.axis].a)r[sc.axis].a++;else r[sc.axis].b++;});
+    var code=B.axes.map(function(a){return r[a.k].a>=r[a.k].b?a.a:a.b;}).join('');
+    return {code:code,r:r};
+  }
+  var resNow=null,resWish=null;
+  function finish(){
+    if(mode==='now'){resNow=calc(answers);resWish=null;hist.push({d:today(),now:resNow.code,wish:null});if(hist.length>12)hist=hist.slice(-12);save(HK,hist);renderHist();renderResult();$('wishAsk').hidden=false;$('cmpBox').innerHTML='';}
+    else{resWish=calc(answers);hist[hist.length-1].wish=resWish.code;save(HK,hist);renderHist();$('wishAsk').hidden=true;renderCompare();}
+    go('result');
+  }
+  function barsHTML(res,cmpTo){
+    return '<div class="bars">'+B.axes.map(function(a){var x=res.r[a.k],tot=x.a+x.b||1,pa=Math.round(x.a/tot*100),left=x.a>=x.b;var deg=Math.abs(x.a-x.b)>=3?'확실히':'살짝';var chg=cmpTo&&(cmpTo.r[a.k].a>=cmpTo.r[a.k].b)!==left;
+      return '<div class="bar'+(chg?' chg':'')+'"><span class="l'+(left?' on':'')+'">'+a.a+'<small>'+a.aName+'</small></span><span class="t"><i style="left:'+(left?0:(100-(100-pa)))+'%;width:'+(left?pa:100-pa)+'%;'+(left?'':'right:0;left:auto')+'"></i></span><span class="r'+(left?'':' on')+'">'+a.b+'<small>'+a.bName+'</small></span><span style="grid-column:1/-1;text-align:center;font-size:.78rem;color:var(--muted)">'+a.name+' — '+(left?a.aName:a.bName)+' 쪽으로 '+deg+' ('+x.a+':'+x.b+')'+(chg?' · 지금과 달라요':'')+'</span></div>';}).join('')+'</div>';
+  }
+  function typeHTML(code,title){var t=B.types[code];return (title?'<p class="sub">'+title+'</p>':'')+'<p class="type">'+code+'</p><p class="tname">'+esc(t.name)+'</p><p class="tline">'+esc(t.line)+'</p>';}
+  function renderResult(){
+    var t=B.types[resNow.code];
+    $('resultBox').innerHTML=typeHTML(resNow.code,'지금의 나')+barsHTML(resNow)+'<div class="two"><div><h4>좋은 점</h4><ul>'+t.good.map(function(g){return '<li>'+esc(g)+'</li>';}).join('')+'</ul></div><div><h4>조심할 점</h4><ul>'+t.care.map(function(g){return '<li>'+esc(g)+'</li>';}).join('')+'</ul></div></div><div class="gc"><img src="img/wink.png" alt=""><p>굿균: 「'+esc(t.say)+'」</p></div>';
+  }
+  function renderCompare(){
+    var a=resNow.code,b=resWish.code,same=a===b,changed=B.axes.filter(function(x,i){return a[i]!==b[i];});
+    var h='<div class="card"><b>지금의 나 → 되고 싶은 나</b><div class="cmp"><div><p class="type">'+a+'</p><span class="tn">'+esc(B.types[a].name)+'</span><small>지금</small></div><div class="arrow">→</div><div><p class="type" style="color:#B07200">'+b+'</p><span class="tn">'+esc(B.types[b].name)+'</span><small>앞으로</small></div></div>';
+    h+=barsHTML(resWish,resNow);
+    if(same)h+='<p class="ask2">지금과 되고 싶은 나가 같아요. 그 자리가 편한지, 아니면 아직 다른 자리를 떠올려 보지 않은 건지 — 한 달 뒤에 다시 봐요.</p>';
+    else h+='<p class="ask2">움직이고 싶은 축: <b>'+changed.map(function(x){return x.name+'('+a[B.axes.indexOf(x)]+'→'+b[B.axes.indexOf(x)]+')';}).join(', ')+'</b>. 무엇이 그 길을 막고 있을까요? 오늘 이야기 나눌 거리예요.</p>';
+    h+='<div class="gc"><img src="img/clap.png" alt=""><p>굿균: 「'+esc(B.types[b].say)+'」</p></div></div>';
+    $('cmpBox').innerHTML=h;
+  }
+
+  /* 결과 카드 (PNG) */
+  function drawCard(){
+    var cv=$('cv'),x=cv.getContext('2d'),W=1080,H=1350;
+    x.fillStyle='#1A2B50';x.fillRect(0,0,W,H);
+    x.fillStyle='#FFFFFF';x.fillRect(60,60,W-120,H-120);
+    x.fillStyle='#1A2B50';x.font='700 40px Pretendard, "Malgun Gothic", sans-serif';x.textAlign='center';x.fillText('AI 동료 유형',W/2,150);
+    x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('신입 동료 굿균의 한 달, 12장면',W/2,200);
+    function block(res,label,y,color){
+      var t=B.types[res.code];
+      x.fillStyle='#5B6885';x.font='600 32px Pretendard, "Malgun Gothic", sans-serif';x.fillText(label,W/2,y);
+      x.fillStyle=color;x.font='900 150px Pretendard, "Malgun Gothic", sans-serif';x.fillText(res.code,W/2,y+150);
+      x.fillStyle='#1A2B50';x.font='800 56px Pretendard, "Malgun Gothic", sans-serif';x.fillText(t.name,W/2,y+225);
+      x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText(t.line,W/2,y+275);
+      var by=y+330;B.axes.forEach(function(a,i){var r=res.r[a.k],tot=r.a+r.b||1,left=r.a>=r.b;x.fillStyle='#D5DDEC';x.fillRect(260,by+i*48,560,22);x.fillStyle=color;var w=560*(Math.max(r.a,r.b)/tot);x.fillRect(left?260:820-w,by+i*48,w,22);x.fillStyle='#1A2B50';x.font='700 30px Pretendard, "Malgun Gothic", sans-serif';x.textAlign='right';x.fillText(a.a+' '+a.aName,240,by+i*48+22);x.textAlign='left';x.fillText(a.bName+' '+a.b,840,by+i*48+22);x.textAlign='center';});
+    }
+    if(resWish){block(resNow,'지금의 나',270,'#1A6EFF');block(resWish,'되고 싶은 나',790,'#B07200');}
+    else{block(resNow,'지금의 나',380,'#1A6EFF');x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('한 달 뒤에 다시 해 보세요.',W/2,1000);}
+    x.fillStyle='#5B6885';x.font='400 26px Pretendard, "Malgun Gothic", sans-serif';x.fillText(today()+' · 자활전문강사 김태균 · 판단은 사람이 해요',W/2,H-100);
+    return cv.toDataURL('image/png');
+  }
+  $('btnCard').onclick=function(){var a=document.createElement('a');a.href=drawCard();a.download='AI동료유형_'+resNow.code+(resWish?'_'+resWish.code:'')+'.png';document.body.appendChild(a);a.click();a.remove();$('copyNote').textContent='카드 그림을 저장했어요.';};
+  $('btnCopy').onclick=function(){
+    var t='AI 동료 유형 — 지금의 나: '+resNow.code+' '+B.types[resNow.code].name+(resWish?' / 되고 싶은 나: '+resWish.code+' '+B.types[resWish.code].name:'')+' ('+today()+')';
+    try{navigator.clipboard.writeText(t).then(function(){$('copyNote').textContent='복사했어요: '+t;},function(){prompt('복사하세요',t);});}catch(e){prompt('복사하세요',t);}
+  };
+  $('btnWish').onclick=function(){start('wish');};
+  $('btnSkipWish').onclick=function(){$('wishAsk').hidden=true;};
+  $('btnRestart').onclick=function(){go('intro');};
+  $('btnStart').onclick=function(){start('now');};
+  $('btnHistClear').onclick=function(){if(!confirm('이 폰에 남은 지난 결과를 모두 지울까요?'))return;hist=[];save(HK,hist);renderHist();};
+
+  /* 우리 센터 */
+  var org=load(OK,[]),cur={};
+  $('pick').innerHTML=B.axes.map(function(a){return '<button type="button" data-k="'+a.k+'" data-v="'+a.a+'">'+a.a+'<small>'+a.aName+'</small></button><button type="button" data-k="'+a.k+'" data-v="'+a.b+'">'+a.b+'<small>'+a.bName+'</small></button>';}).join('');
+  // 2열씩 축 순서대로 보이도록 재배열
+  (function(){var p=$('pick');var btns=Array.prototype.slice.call(p.children);p.innerHTML='';p.style.gridTemplateColumns='repeat(2,1fr)';btns.forEach(function(b){p.appendChild(b);});})();
+  $('pick').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;cur[b.dataset.k]=b.dataset.v;$('pick').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',cur[x.dataset.k]===x.dataset.v);});$('btnAddPerson').disabled=Object.keys(cur).length<4;});
+  function orgCode(){return B.axes.map(function(a){return cur[a.k];}).join('');}
+  $('btnAddPerson').onclick=function(){org.push(orgCode());save(OK,org);cur={};$('pick').querySelectorAll('button').forEach(function(x){x.classList.remove('on');});$('btnAddPerson').disabled=true;renderOrg();};
+  function renderOrg(){
+    $('people').innerHTML=org.map(function(c,i){return '<span>'+c+'<b data-i="'+i+'" title="빼기">×</b></span>';}).join('');
+    $('people').querySelectorAll('b').forEach(function(b){b.onclick=function(){org.splice(+b.dataset.i,1);save(OK,org);renderOrg();};});
+    $('orgCount').textContent=org.length?org.length+'명 모였어요.':'아직 아무도 없어요.';
+    if(org.length<2){$('orgResult').hidden=true;return;}
+    var code='',bars='';
+    B.axes.forEach(function(a,i){var na=org.filter(function(c){return c[i]===a.a;}).length,nb=org.length-na,left=na>=nb,pa=Math.round(na/org.length*100);code+=left?a.a:a.b;
+      bars+='<div class="bar"><span class="l'+(left?' on':'')+'">'+a.a+'<small>'+a.aName+'</small></span><span class="t"><i style="'+(left?'left:0;width:'+pa+'%':'right:0;width:'+(100-pa)+'%')+'"></i></span><span class="r'+(left?'':' on')+'">'+a.b+'<small>'+a.bName+'</small></span><span style="grid-column:1/-1;text-align:center;font-size:.78rem;color:var(--muted)">'+a.name+' — '+a.aName+' '+pa+'% · '+a.bName+' '+(100-pa)+'%</span></div>';});
+    var t=B.types[code],says=code.split('').map(function(ch){return B.orgSay[ch];}).join(' ');
+    var cnt={};org.forEach(function(c){cnt[c]=(cnt[c]||0)+1;});var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a];}).slice(0,3);
+    $('orgResult').hidden=false;
+    $('orgResult').innerHTML='<p class="sub">우리 센터 유형 ('+org.length+'명, 축마다 다수결)</p><p class="type">'+code+'</p><p class="tname">'+esc(t.name)+' 센터</p><p class="tline">'+esc(says)+'</p><div class="bars">'+bars+'</div><p class="note">많이 나온 유형: '+top.map(function(c){return '<b>'+c+'</b> '+esc(B.types[c].name)+' '+cnt[c]+'명';}).join(' · ')+'</p><div class="gc"><img src="img/think.png" alt=""><p>굿균: 「우리 센터에서 마지막 도장은 누가 찍나요? 그걸 정해 두면 저도 마음이 편해요.」</p></div>';
+  }
+  renderOrg();
+  $('btnOrgClear').onclick=function(){if(!confirm('모은 글자를 모두 지울까요?'))return;org=[];save(OK,org);renderOrg();};
+  ['btnOrgGo','btnOrgGo2','btnOrgGo3'].forEach(function(id){$(id).onclick=function(){go('org');};});
+  ['btnAboutGo','btnAboutGo2'].forEach(function(id){$(id).onclick=function(){go('about');};});
+  $('btnOrgBack').onclick=$('btnAboutBack').onclick=function(){go('intro');};
+
+  var h=location.hash.slice(1);
+  if(h==='org')go('org');else if(h==='about')go('about');
+})();
+</script>
+</body>
+</html>
