@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI 동료 유형</title>
+<title>AI 동료 네 글자</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="신입 동료 굿균의 한 달, 12장면. AI를 대하는 나의 자세를 네 글자 유형으로. 지금의 나와 되고 싶은 나, 우리 센터 유형까지.">
-<meta property="og:title" content="AI 동료 유형 — 나는 어떤 선배일까?">
-<meta property="og:description" content="신입 동료 굿균의 한 달 12장면으로 보는 AI를 대하는 나의 자세. 16유형.">
+<meta name="description" content="AI 앞에서 나는 어떤 동료일까 — 신입 동료 굿균의 한 달 12장면으로 보는 네 글자 유형. 지금의 나와 되고 싶은 나, 우리 기관의 네 글자, 그리고 우리 기관 AI 기준 한 장까지.">
+<meta property="og:title" content="AI 동료 네 글자 — 나의 AI는 ○○○○">
+<meta property="og:description" content="신입 동료 굿균의 한 달 12장면으로 보는 AI를 대하는 나의 자세. 16유형. 우리 기관 AI 기준 한 장 만들기까지.">
 <meta property="og:type" content="website">
 <style>
 :root{
@@ -16,6 +16,7 @@
   --text:#1A2B50; --muted:#5B6885;
   --amber:#8A5A00; --amber-bg:#FFF4D6; --amber-line:#E5B93C;
   --mint-bg:#E9F7EF; --mint-line:#BFE6CF; --gold:#F2B705;
+  --r:#E63946; --y:#E5B93C; --g:#1F9D5C;
   --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){
@@ -31,9 +32,12 @@
 html{font-size:17px}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;-webkit-text-size-adjust:100%}
 a{color:var(--blue)}
-button{font:inherit;color:inherit;cursor:pointer}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+[hidden]{display:none!important}
 .page{max-width:640px;margin:0 auto;padding:16px 16px 40px;min-height:100vh;display:flex;flex-direction:column}
+.page.wide{max-width:900px}
 header.top{display:flex;gap:12px;align-items:center}
 header.top img{width:56px;height:auto;flex:none}
 h1{margin:0;font-size:1.35rem;line-height:1.25}
@@ -44,6 +48,8 @@ h1{margin:0;font-size:1.35rem;line-height:1.25}
 .btn{min-height:50px;padding:0 18px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:1rem;width:100%}
 .btn.main{background:var(--blue);border-color:var(--blue);color:#fff}
 .btn.sm{min-height:42px;font-size:.9rem;width:auto;padding:0 14px}
+.btn.xs{min-height:34px;font-size:.82rem;width:auto;padding:0 10px;border-radius:10px}
+.btn:disabled{opacity:.5;cursor:default}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .row .btn{flex:1 1 140px;width:auto}
 .hero{text-align:center;padding:24px 18px}
@@ -54,6 +60,7 @@ h1{margin:0;font-size:1.35rem;line-height:1.25}
 .axes div{display:grid;grid-template-columns:52px 1fr 1fr;gap:8px;align-items:center;font-size:.85rem;padding:8px 10px;border-radius:12px;background:var(--soft)}
 .axes b{font-size:.95rem}
 .axes span{color:var(--muted)}
+.use{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:.9rem;color:var(--amber)}
 /* 장면 */
 .prog{display:flex;gap:4px;margin:14px 0 0}
 .prog i{flex:1;height:8px;border-radius:4px;background:var(--line)}
@@ -104,6 +111,10 @@ h1{margin:0;font-size:1.35rem;line-height:1.25}
 .hist td,.hist th{padding:5px 4px;border-bottom:1px solid var(--line);text-align:center;font-size:.85rem}
 .hist th{color:var(--muted);font-weight:600}
 .ask2{margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:.95rem}
+.codebox{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--soft);font-size:.92rem}
+.codebox code{display:inline-block;padding:4px 10px;border-radius:8px;background:var(--surface);border:1.5px solid var(--line);font-weight:800;letter-spacing:.06em;font-size:1rem}
+.codebox input,.in{width:100%;min-height:44px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:1rem}
+details summary{cursor:pointer;font-weight:700}
 canvas{display:none}
 /* 기관 */
 .pick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
@@ -113,27 +124,94 @@ canvas{display:none}
 .list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .list span{padding:4px 10px;border-radius:999px;background:var(--soft);font-weight:700;letter-spacing:.08em;font-size:.9rem}
 .list span b{margin-left:4px;color:var(--muted);font-weight:400;letter-spacing:0;cursor:pointer}
+textarea.in{min-height:90px;resize:vertical;line-height:1.5}
+.first{margin-top:12px;display:grid;gap:8px}
+.first div{padding:10px 12px;border-radius:12px;background:var(--mint-bg);border:1.5px solid var(--mint-line);font-size:.92rem}
+.first b{display:block}
+/* 기준 한 장 */
+.steps{display:flex;gap:6px;margin-top:14px;overflow-x:auto;padding-bottom:2px}
+.steps button{flex:none;min-height:38px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:.86rem}
+.steps button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.steps button.done{border-color:var(--green);color:var(--green)}
+.vorg{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:10px}
+.vorg button{text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:.9rem;line-height:1.4}
+.vorg button.on{border-color:var(--blue);background:var(--soft)}
+.vorg b{display:block;font-size:.98rem}
+.hintbox{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--soft);font-size:.88rem}
+.hintbox ul{margin:4px 0 0;padding-left:1.1rem}
+.cards3{display:grid;gap:8px;margin-top:12px}
+.c3{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:.93rem}
+.c3 .lv{display:flex;gap:4px}
+.c3 .lv button{min-width:40px;min-height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:800;font-size:.8rem}
+.c3 .lv button.on.R{background:var(--r);border-color:var(--r);color:#fff}
+.c3 .lv button.on.Y{background:var(--y);border-color:var(--y);color:#3A2800}
+.c3 .lv button.on.G{background:var(--g);border-color:var(--g);color:#fff}
+.c3 .lv button.on.A{background:var(--g);border-color:var(--g);color:#fff}
+.c3 .lv button.on.B{background:var(--y);border-color:var(--y);color:#3A2800}
+.c3 .lv button.on.C{background:var(--r);border-color:var(--r);color:#fff}
+.c3.set{background:var(--soft)}
+.lgd{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:.84rem;color:var(--muted)}
+.lgd i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.judge{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:.88rem}
+.judge ol{margin:4px 0 0;padding-left:1.2rem}
+.fbox{margin-top:14px;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface)}
+.fbox.hi{border-color:var(--blue);box-shadow:0 0 0 2px var(--soft)}
+.fbox h3{margin:0 0 2px;font-size:1rem}
+.fbox .q{margin:0 0 8px;font-size:.86rem;color:var(--muted)}
+.fbox label{display:block;font-size:.82rem;color:var(--muted);margin:8px 0 2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{min-height:36px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-size:.88rem;font-weight:600}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.tri{display:grid;gap:8px;grid-template-columns:1fr}
+@media (min-width:700px){.tri{grid-template-columns:1fr 1fr 1fr}}
+.tri>div{padding:8px;border-radius:12px;border-top:6px solid var(--line)}
+.tri>div.R{border-top-color:var(--r)}.tri>div.Y{border-top-color:var(--y)}.tri>div.G{border-top-color:var(--g)}
+.tri>div.A{border-top-color:var(--g)}.tri>div.B{border-top-color:var(--y)}.tri>div.C{border-top-color:var(--r)}
+.tri b{display:block;font-size:.85rem;margin-bottom:4px}
+.grid2{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}}
 footer{margin-top:24px;padding-top:12px;border-top:1.5px solid var(--line);color:var(--muted);font-size:.8rem}
 footer p{margin:2px 0}
 .note{font-size:.85rem;color:var(--muted);margin:8px 0 0}
+/* 인쇄용 한 장 */
+#printArea{display:none}
+@media print{
+  @page{size:A4;margin:11mm}
+  body{background:#fff;color:#000}
+  .page,footer{display:none!important}
+  #printArea{display:block;font-family:var(--font);font-size:10.5pt;line-height:1.45;color:#000}
+  #printArea h1{font-size:17pt;margin:0 0 2mm;color:#1A2B50}
+  #printArea .meta{font-size:9.5pt;color:#444;margin:0 0 3mm}
+  #printArea .intro{font-size:9.5pt;color:#333;margin:0 0 3mm;padding:2mm 3mm;border-left:3px solid #1A6EFF;background:#F4F7FC}
+  #printArea .pb{border:1px solid #BBB;border-radius:3mm;padding:2mm 3mm;margin:0 0 2.2mm;break-inside:avoid}
+  #printArea .pb h2{font-size:11pt;margin:0 0 1mm;color:#1A2B50}
+  #printArea .pb p{margin:0;white-space:pre-line}
+  #printArea .pq{font-size:8.5pt;color:#666;margin:0 0 1mm}
+  #printArea .pt{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2mm}
+  #printArea .pt>div{border-top:4px solid #BBB;padding-top:1mm;font-size:9.5pt;white-space:pre-line}
+  #printArea .pt>div.R{border-top-color:#E63946}#printArea .pt>div.Y{border-top-color:#E5B93C}#printArea .pt>div.G{border-top-color:#1F9D5C}
+  #printArea .pt b{display:block;font-size:9pt;margin-bottom:.5mm}
+  #printArea .foot{font-size:8pt;color:#555;margin-top:2mm}
+}
 </style>
 </head>
 <body>
-<div class="page">
+<div class="page" id="pageBox">
   <header class="top">
     <img src="img/hello.png" alt="굿균" width="56">
-    <div><h1>AI 동료 유형</h1><p class="sub">신입 동료 굿균의 한 달 — 나는 어떤 선배일까?</p></div>
+    <div><h1>AI 동료 네 글자</h1><p class="sub">AI 앞에서 나는 어떤 동료일까 — 네 글자로, 그리고 우리 기관 AI 기준 한 장까지</p></div>
   </header>
 
   <!-- 시작 -->
   <section class="view on" id="v-intro">
     <div class="card hero">
       <img src="img/hello.png" alt="">
-      <h2>우리 센터에 신입 동료가 왔어요.<br>이름은 굿균, AI예요.</h2>
-      <p>성실하고 아는 건 많은데, 우리 센터 일은 처음이에요.<br>한 달 동안 12장면. 당신은 어떤 선배인가요?</p>
-      <button class="btn main" id="btnStart" type="button" style="margin-top:10px">시작하기 (3분)</button>
+      <h2>우리 기관에 신입 동료가 왔어요.<br>이름은 굿균, AI예요.</h2>
+      <p>성실하고 아는 건 많은데, 우리 일은 처음이에요.<br>한 달 동안 12장면. 당신은 어떤 선배인가요?</p>
+      <button class="btn main" id="btnStart" type="button" style="margin-top:10px">네 글자 검사 시작 (3분)</button>
       <p class="note">정답은 없어요. 이름도, 저장도 없어요. 결과는 이 폰에만 남아요.</p>
     </div>
+    <div class="use">교육 때 하고, 결과 코드를 들고 가서 동료와 함께 해 보고, 시간이 지나 다시 점검하는 도구예요. 매일 쓰는 도구는 아니에요.</div>
     <div class="card">
       <b>네 가지 축으로 네 글자</b>
       <div class="axes" id="axesIntro"></div>
@@ -141,10 +219,10 @@ footer p{margin:2px 0}
     <div class="card" id="histCard" hidden>
       <b>이 폰에 남은 지난 결과</b>
       <div class="hist" id="histIntro"></div>
-      <div class="row"><button class="btn sm" id="btnOrgGo" type="button">우리 센터 유형 모으기</button><button class="btn sm" id="btnAboutGo" type="button">이 도구는</button><button class="btn sm" id="btnHistClear" type="button">지난 결과 지우기</button></div>
+      <div class="row"><button class="btn sm" id="btnOrgGo" type="button">우리 기관 네 글자 모으기</button><button class="btn sm" id="btnSheetGo" type="button">기준 한 장 만들기</button><button class="btn sm" id="btnAboutGo" type="button">이 도구는</button><button class="btn sm" id="btnHistClear" type="button">지난 결과 지우기</button></div>
     </div>
     <div class="card" id="noHist">
-      <div class="row" style="margin-top:0"><button class="btn sm" id="btnOrgGo2" type="button">우리 센터 유형 모으기</button><button class="btn sm" id="btnAboutGo2" type="button">이 도구는</button></div>
+      <div class="row" style="margin-top:0"><button class="btn sm" id="btnOrgGo2" type="button">우리 기관 네 글자 모으기</button><button class="btn sm" id="btnSheetGo2" type="button">기준 한 장 만들기</button><button class="btn sm" id="btnAboutGo2" type="button">이 도구는</button></div>
     </div>
   </section>
 
@@ -165,69 +243,102 @@ footer p{margin:2px 0}
     </div>
     <div id="cmpBox"></div>
     <div class="card" id="afterBox">
-      <div class="row" style="margin-top:0">
+      <div class="codebox"><b>내 결과 코드</b> <code id="myCode"></code> <button class="btn xs" id="btnCopyCode" type="button">코드 복사</button>
+        <p class="note" style="margin-top:8px">이 코드를 동료에게 보내면 「우리 기관 네 글자 모으기」에 붙여 넣을 수 있어요. 다음에 다시 할 때 붙여 넣으면 그때의 나와 견줄 수 있어요.</p>
+        <p class="note">다음 점검일 <b id="nextDate"></b> (6개월 뒤) <button class="btn xs" id="btnIcs" type="button">캘린더에 넣기</button></p>
+      </div>
+      <details style="margin-top:12px"><summary>그때의 나와 견주기 — 지난번 결과 코드 붙여 넣기</summary>
+        <div class="row" style="margin-top:8px"><input class="in" id="oldCode" placeholder="예: NCSP/NTDP/2026.5.9" style="flex:2 1 200px"><button class="btn sm" id="btnCmpOld" type="button" style="flex:1 1 100px">견주기</button></div>
+        <div id="oldCmp"></div>
+      </details>
+      <div class="row">
         <button class="btn sm main" id="btnCard" type="button">결과 카드 저장</button>
         <button class="btn sm" id="btnCopy" type="button">글로 복사</button>
-        <button class="btn sm" id="btnOrgGo3" type="button">우리 센터 유형 모으기</button>
+        <button class="btn sm" id="btnOrgGo3" type="button">우리 기관 네 글자 모으기</button>
+        <button class="btn sm" id="btnSheetGo3" type="button">기준 한 장 만들기</button>
         <button class="btn sm" id="btnRestart" type="button">처음으로</button>
       </div>
       <p class="note" id="copyNote"></p>
-      <p class="ask2">한 달 뒤에 다시 해 보세요. 그때의 「지금」이 오늘의 「앞으로」와 같은지 — 이 폰에 남아 있어요.</p>
+      <p class="ask2">6개월 뒤에 다시 해 보세요. 그때의 「지금」이 오늘의 「앞으로」와 같은지 — 결과 코드가 있으면 다른 폰에서도 견줄 수 있어요.</p>
     </div>
   </section>
 
-  <!-- 우리 센터 -->
+  <!-- 우리 기관 -->
   <section class="view" id="v-org">
     <div class="card">
-      <b>우리 센터 유형 모으기</b>
-      <p class="sub" style="margin:6px 0 0">각자 결과 네 글자를 말하면, 한 사람씩 눌러 넣어요. 이름은 안 받아요. 숫자만 세요.</p>
+      <b>우리 기관 네 글자 모으기</b>
+      <p class="sub" style="margin:6px 0 0">각자 결과 네 글자를 말하면 한 사람씩 눌러 넣어요. 이름은 안 받아요. 숫자만 세요.</p>
       <div class="pick" id="pick"></div>
       <div class="row"><button class="btn main" id="btnAddPerson" type="button" disabled>이 사람 넣기</button></div>
+      <details style="margin-top:12px"><summary>결과 코드로 한꺼번에 넣기</summary>
+        <p class="sub" style="margin:6px 0 6px">동료들이 보낸 결과 코드를 줄마다 붙여 넣으면 「지금의 나」 네 글자만 뽑아 넣어요.</p>
+        <textarea class="in" id="orgPaste" placeholder="NCSP/NTDP/2026.11.9&#10;FTDM/----/2026.11.9&#10;NTSP"></textarea>
+        <div class="row"><button class="btn sm" id="btnOrgPaste" type="button">붙여 넣은 코드 넣기</button></div>
+      </details>
       <div class="list" id="people"></div>
       <p class="note" id="orgCount"></p>
     </div>
     <div class="card" id="orgResult" hidden></div>
-    <div class="card"><div class="row" style="margin-top:0"><button class="btn sm" id="btnOrgClear" type="button">모은 것 지우기</button><button class="btn sm" id="btnOrgBack" type="button">처음으로</button></div><p class="note">모은 글자는 이 브라우저에만 남아요. 강의 끝나면 지워 주세요.</p></div>
+    <div class="card"><div class="row" style="margin-top:0"><button class="btn sm" id="btnOrgClear" type="button">모은 것 지우기</button><button class="btn sm" id="btnOrgBack" type="button">처음으로</button></div><p class="note">모은 글자는 이 브라우저에만 남아요. 교육이 끝나면 지워 주세요.</p></div>
+  </section>
+
+  <!-- 기준 한 장 -->
+  <section class="view" id="v-sheet">
+    <div class="card">
+      <b>우리 기관 AI 기준 한 장 만들기</b>
+      <p class="sub" style="margin:6px 0 0">정보 신호등(20장) → 일의 신호등(15장) → 양식 7칸 → 한 장으로 인쇄. 정답은 없고, 기관마다 다른 것이 정상이에요. 이 브라우저에 초안이 남고(파일로도 저장), 어디로도 보내지 않아요.</p>
+      <div class="steps" id="steps"></div>
+    </div>
+    <div id="sheetBox"></div>
+    <div class="card"><div class="row" style="margin-top:0"><button class="btn sm" id="btnSheetReset" type="button">처음부터 다시(지우기)</button><button class="btn sm" id="btnSheetBack" type="button">처음으로</button></div><p class="note">이 양식은 법률 자문이 아니에요. 개인정보 처리의 최종 판단은 기관의 개인정보 보호책임자·법인과 확인하세요.</p></div>
   </section>
 
   <!-- 안내 -->
   <section class="view" id="v-about">
     <div class="card">
       <b>이 도구는</b>
-      <p>AI를 「쓰는 법」이 아니라 AI를 「대하는 자세」를 보는 도구예요. 신입 동료를 어떻게 대하는지는 누구나 몸으로 알아서, AI를 성실하지만 우리 센터 일은 처음인 신입 동료로 두고 열두 장면을 겪어 봐요.</p>
+      <p>AI를 「쓰는 법」이 아니라 AI를 「대하는 자세」를 보는 도구예요. 신입 동료를 어떻게 대하는지는 누구나 몸으로 알아서, AI를 성실하지만 우리 일은 처음인 신입 동료로 두고 열두 장면을 겪어 봐요. 그다음 우리 기관의 네 글자를 모으고, AI 기준 한 장까지 만들어요.</p>
       <ul style="padding-left:1.2rem">
         <li><b>정답이 없어요.</b> 16유형 어느 것도 옳거나 틀리지 않아요. 좋은 점과 조심할 점만 적었어요. 결론은 각자가 내요.</li>
-        <li><b>세 번 봐요.</b> 지금의 나 → 되고 싶은 나 → 한 달 뒤의 나. 바뀐 축이 곧 이야기할 거리예요.</li>
-        <li><b>우리 센터 유형</b>은 각자 네 글자를 모아 축마다 다수결. 센터가 함께 이야기 나누는 시작점이에요.</li>
-        <li><b>저장하지 않아요.</b> 서버가 없고, 이름을 받지 않아요. 결과는 이 브라우저에만 남고 「지난 결과 지우기」로 지워져요.</li>
-        <li>자활전문강사 김태균의 「AI야~ 넌 나(우리)에게 무엇을 줄 수 있니?」 이야기 자리에서 함께 써요. 혼자 해 봐도 돼요.</li>
+        <li><b>세 번 봐요.</b> 지금의 나 → 되고 싶은 나 → 6개월 뒤의 나. 결과 코드를 적어 두면 다른 폰에서도 견줄 수 있어요.</li>
+        <li><b>우리 기관 네 글자</b>는 각자 네 글자를 모아 축마다 다수결. 점수가 아니라 기관이 함께 이야기 나누는 출발점이에요. 「먼저 정할 기준 셋」도 출발점일 뿐이에요.</li>
+        <li><b>기준 한 장</b>은 정보 신호등·일의 신호등·양식 7칸으로 우리 기관의 AI 사용 기준 초안을 만드는 화면이에요. 교육에서는 가상 기관으로 연습하고, 돌아가서 우리 기관 것을 동료와 함께 채워요. 법률 자문이 아니에요.</li>
+        <li><b>저장하지 않아요.</b> 서버가 없고, 이름을 받지 않아요. 결과·초안은 이 브라우저에만 남고 「지우기」로 지워져요.</li>
+        <li>자활전문강사 김태균의 강의 「나의 AI는 ○○○○ — 우리 기관 AI 기준 한 장까지」에서 함께 써요. 혼자 해 봐도 돼요.</li>
       </ul>
-      <p class="sub">만든 사람의 다른 도구: <a href="https://jahwalktg.github.io/jahwal-tools/" target="_blank" rel="noopener">지역자활센터 업무 도구</a> · <a href="https://jahwalktg.github.io/gukgicho/" target="_blank" rel="noopener">국기초 가늠표</a> · <a href="https://jahwalktg.github.io/jahwal-start/" target="_blank" rel="noopener">어서와, 자활은 처음이지?</a></p>
+      <p class="sub">참고: 개인정보보호위원회 「생성형 AI 서비스 이용자를 위한 개인정보 보호 가이드」(2026.5), 디지털플랫폼정부위원회 「공공부문 초거대 AI 도입·활용 가이드라인 2.0」(2025.4). 만든 사람의 다른 도구: <a href="https://jahwalktg.github.io/jahwal-tools/" target="_blank" rel="noopener">지역자활센터 업무 도구</a> · <a href="https://jahwalktg.github.io/gukgicho/" target="_blank" rel="noopener">국기초 가늠표</a> · <a href="https://jahwalktg.github.io/jahwal-start/" target="_blank" rel="noopener">어서와, 자활은 처음이지?</a></p>
       <div class="row"><button class="btn sm" id="btnAboutBack" type="button">처음으로</button></div>
     </div>
   </section>
 
   <footer>
-    <p>AI 동료 유형 · 자활전문강사 김태균 · 굿균은 화면 속에만 있어요. 판단은 사람이 해요.</p>
-    <p>의견 <a href="mailto:jahwalktg@gmail.com?subject=AI%20%EB%8F%99%EB%A3%8C%20%EC%9C%A0%ED%98%95%20%EC%9D%98%EA%B2%AC">jahwalktg@gmail.com</a></p>
+    <p>AI 동료 네 글자 · 자활전문강사 김태균 · 굿균은 화면 속에만 있어요. 판단은 사람이 해요.</p>
+    <p>의견 <a href="mailto:jahwalktg@gmail.com?subject=AI%20%EB%8F%99%EB%A3%8C%20%EB%84%A4%20%EA%B8%80%EC%9E%90%20%EC%9D%98%EA%B2%AC">jahwalktg@gmail.com</a></p>
   </footer>
 </div>
+<div id="printArea"></div>
 <canvas id="cv" width="1080" height="1350"></canvas>
 
-<script src="data.js?v=1"></script>
+<script src="data.js?v=2"></script>
 <script>
 (function(){
   'use strict';
   var B=window.BUDDY,$=function(id){return document.getElementById(id);};
   var AX={};B.axes.forEach(function(a){AX[a.k]=a;});
-  var HK='ai-buddy.history.v1',OK='ai-buddy.org.v1';
+  var HK='ai-buddy.history.v1',OK='ai-buddy.org.v1',SK='ai-buddy.sheet.v1';
+  var CODE_RE=/([NF][CT][SD][PM])/g;
   function load(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}}
   function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function pad(n){return (n<10?'0':'')+n;}
   function today(){var d=new Date();return d.getFullYear()+'.'+(d.getMonth()+1)+'.'+d.getDate();}
+  function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+  function plusMonths(m){var d=new Date();d.setMonth(d.getMonth()+m);return d;}
+  function dl(name,text,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type||'text/plain;charset=utf-8'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);}
+  function copyText(t,ok){try{navigator.clipboard.writeText(t).then(function(){ok&&ok();},function(){prompt('복사하세요',t);});}catch(e){prompt('복사하세요',t);}}
 
   var hist=load(HK,[]);
-  function go(v){document.querySelectorAll('.view').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v);});window.scrollTo(0,0);}
+  function go(v){document.querySelectorAll('.view').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v);});$('pageBox').classList.toggle('wide',v==='sheet');window.scrollTo(0,0);}
 
   /* 시작 화면 */
   $('axesIntro').innerHTML=B.axes.map(function(a){return '<div><b>'+a.a+' / '+a.b+'</b><span>'+a.name+' — '+a.q+'</span><span>'+a.aName+' ↔ '+a.bName+'</span></div>';}).join('');
@@ -240,7 +351,7 @@ footer p{margin:2px 0}
 
   /* 장면 진행 */
   var mode='now',answers={},prevAns=null,idx=0;
-  var order={}; // 장면마다 선택지 섞기(한 번 정하면 같은 세션에서 유지)
+  var order={};
   function shuffled(sc){if(!order[sc.n]){var a=sc.c.map(function(c,i){return i;});for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}order[sc.n]=a;}return order[sc.n].map(function(i){return sc.c[i];});}
   function start(m){mode=m;idx=0;if(m==='now'){answers={};prevAns=null;}else{prevAns=answers;answers={};}go('scene');renderScene();}
   function renderScene(){
@@ -262,9 +373,11 @@ footer p{margin:2px 0}
     return {code:code,r:r};
   }
   var resNow=null,resWish=null;
+  function myCode(){return resNow?resNow.code+'/'+(resWish?resWish.code:'----')+'/'+today():'';}
   function finish(){
     if(mode==='now'){resNow=calc(answers);resWish=null;hist.push({d:today(),now:resNow.code,wish:null});if(hist.length>12)hist=hist.slice(-12);save(HK,hist);renderHist();renderResult();$('wishAsk').hidden=false;$('cmpBox').innerHTML='';}
     else{resWish=calc(answers);hist[hist.length-1].wish=resWish.code;save(HK,hist);renderHist();$('wishAsk').hidden=true;renderCompare();}
+    $('myCode').textContent=myCode();$('nextDate').textContent=iso(plusMonths(6)).replace(/-/g,'.');$('oldCmp').innerHTML='';
     go('result');
   }
   function barsHTML(res,cmpTo){
@@ -274,25 +387,46 @@ footer p{margin:2px 0}
   function typeHTML(code,title){var t=B.types[code];return (title?'<p class="sub">'+title+'</p>':'')+'<p class="type">'+code+'</p><p class="tname">'+esc(t.name)+'</p><p class="tline">'+esc(t.line)+'</p>';}
   function renderResult(){
     var t=B.types[resNow.code];
-    $('resultBox').innerHTML=typeHTML(resNow.code,'지금의 나')+barsHTML(resNow)+'<div class="two"><div><h4>좋은 점</h4><ul>'+t.good.map(function(g){return '<li>'+esc(g)+'</li>';}).join('')+'</ul></div><div><h4>조심할 점</h4><ul>'+t.care.map(function(g){return '<li>'+esc(g)+'</li>';}).join('')+'</ul></div></div><div class="gc"><img src="img/wink.png" alt=""><p>굿균: 「'+esc(t.say)+'」</p></div>';
+    $('resultBox').innerHTML=typeHTML(resNow.code,'지금의 나 · 나의 AI는')+barsHTML(resNow)+'<div class="two"><div><h4>좋은 점</h4><ul>'+t.good.map(function(g){return '<li>'+esc(g)+'</li>';}).join('')+'</ul></div><div><h4>조심할 점</h4><ul>'+t.care.map(function(g){return '<li>'+esc(g)+'</li>';}).join('')+'</ul></div></div><div class="gc"><img src="img/wink.png" alt=""><p>굿균: 「'+esc(t.say)+'」</p></div>';
   }
   function renderCompare(){
     var a=resNow.code,b=resWish.code,same=a===b,changed=B.axes.filter(function(x,i){return a[i]!==b[i];});
     var h='<div class="card"><b>지금의 나 → 되고 싶은 나</b><div class="cmp"><div><p class="type">'+a+'</p><span class="tn">'+esc(B.types[a].name)+'</span><small>지금</small></div><div class="arrow">→</div><div><p class="type" style="color:#B07200">'+b+'</p><span class="tn">'+esc(B.types[b].name)+'</span><small>앞으로</small></div></div>';
     h+=barsHTML(resWish,resNow);
-    if(same)h+='<p class="ask2">지금과 되고 싶은 나가 같아요. 그 자리가 편한지, 아니면 아직 다른 자리를 떠올려 보지 않은 건지 — 한 달 뒤에 다시 봐요.</p>';
+    if(same)h+='<p class="ask2">지금과 되고 싶은 나가 같아요. 그 자리가 편한지, 아니면 아직 다른 자리를 떠올려 보지 않은 건지 — 6개월 뒤에 다시 봐요.</p>';
     else h+='<p class="ask2">움직이고 싶은 축: <b>'+changed.map(function(x){return x.name+'('+a[B.axes.indexOf(x)]+'→'+b[B.axes.indexOf(x)]+')';}).join(', ')+'</b>. 무엇이 그 길을 막고 있을까요? 오늘 이야기 나눌 거리예요.</p>';
     h+='<div class="gc"><img src="img/clap.png" alt=""><p>굿균: 「'+esc(B.types[b].say)+'」</p></div></div>';
     $('cmpBox').innerHTML=h;
   }
+  /* 결과 코드 읽기: 네 글자(지금) / 네 글자 또는 ----(앞으로) / 날짜 */
+  function parseCode(s){
+    s=String(s||'').trim().toUpperCase();var m=s.match(/([NF][CT][SD][PM])(?:[^A-Z0-9]+([NF][CT][SD][PM]|-{4}))?(?:[^0-9]+(\d{4}[.\-\/]\d{1,2}[.\-\/]\d{1,2}))?/);
+    if(!m)return null;return {now:m[1],wish:(m[2]&&m[2]!=='----')?m[2]:null,date:m[3]||''};
+  }
+  $('btnCmpOld').onclick=function(){
+    var p=parseCode($('oldCode').value);if(!p){$('oldCmp').innerHTML='<p class="note">코드를 못 읽었어요. 네 글자(예: NCSP)가 들어 있어야 해요.</p>';return;}
+    if(!resNow){$('oldCmp').innerHTML='<p class="note">먼저 오늘의 네 글자 검사를 해 주세요.</p>';return;}
+    var a=p.now,b=resNow.code,changed=B.axes.filter(function(x,i){return a[i]!==b[i];});
+    var h='<div class="cmp" style="margin-top:10px"><div><p class="type" style="color:var(--muted)">'+a+'</p><span class="tn">'+esc(B.types[a].name)+'</span><small>그때'+(p.date?' · '+esc(p.date):'')+'</small></div><div class="arrow">→</div><div><p class="type">'+b+'</p><span class="tn">'+esc(B.types[b].name)+'</span><small>지금 · '+today()+'</small></div></div>';
+    if(!changed.length)h+='<p class="ask2">그때와 같은 네 글자예요. 그 자리가 편한 자리인지, 되고 싶은 나로 가는 길이 막혀 있는지 생각해 볼 거리예요.</p>';
+    else h+='<p class="ask2">움직인 축: <b>'+changed.map(function(x){return x.name+'('+a[B.axes.indexOf(x)]+'→'+b[B.axes.indexOf(x)]+')';}).join(', ')+'</b>'+(p.wish?' · 그때 되고 싶던 나는 <b>'+p.wish+'</b>'+(p.wish===b?' — 그 자리에 왔어요.':' — 아직 가는 길이에요.'):'')+'</p>';
+    $('oldCmp').innerHTML=h;
+  };
+  /* 캘린더(ics) */
+  $('btnIcs').onclick=function(){
+    var d=plusMonths(6),ds=iso(d).replace(/-/g,''),code=myCode();
+    var t=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AI 동료 네 글자//KO','BEGIN:VEVENT','UID:'+Date.now()+'@ai-buddy','DTSTAMP:'+iso(new Date()).replace(/-/g,'')+'T000000Z','DTSTART;VALUE=DATE:'+ds,'SUMMARY:AI 동료 네 글자 — 다시 점검하기','DESCRIPTION:지난 결과 코드 '+code+' 를 붙여 넣고 그때의 나와 견줘 보세요. '+location.href.split('#')[0],'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    dl('AI동료네글자_다시점검.ics',t,'text/calendar;charset=utf-8');$('copyNote').textContent='캘린더 파일을 받았어요. 열면 '+iso(d).replace(/-/g,'.')+'에 일정이 들어가요.';
+  };
+  $('btnCopyCode').onclick=function(){copyText(myCode(),function(){$('copyNote').textContent='결과 코드를 복사했어요: '+myCode();});};
 
   /* 결과 카드 (PNG) */
   function drawCard(){
     var cv=$('cv'),x=cv.getContext('2d'),W=1080,H=1350;
     x.fillStyle='#1A2B50';x.fillRect(0,0,W,H);
     x.fillStyle='#FFFFFF';x.fillRect(60,60,W-120,H-120);
-    x.fillStyle='#1A2B50';x.font='700 40px Pretendard, "Malgun Gothic", sans-serif';x.textAlign='center';x.fillText('AI 동료 유형',W/2,150);
-    x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('신입 동료 굿균의 한 달, 12장면',W/2,200);
+    x.fillStyle='#1A2B50';x.font='700 40px Pretendard, "Malgun Gothic", sans-serif';x.textAlign='center';x.fillText('AI 동료 네 글자',W/2,150);
+    x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('나의 AI는 '+resNow.code+' — 신입 동료 굿균의 한 달, 12장면',W/2,200);
     function block(res,label,y,color){
       var t=B.types[res.code];
       x.fillStyle='#5B6885';x.font='600 32px Pretendard, "Malgun Gothic", sans-serif';x.fillText(label,W/2,y);
@@ -302,14 +436,15 @@ footer p{margin:2px 0}
       var by=y+330;B.axes.forEach(function(a,i){var r=res.r[a.k],tot=r.a+r.b||1,left=r.a>=r.b;x.fillStyle='#D5DDEC';x.fillRect(260,by+i*48,560,22);x.fillStyle=color;var w=560*(Math.max(r.a,r.b)/tot);x.fillRect(left?260:820-w,by+i*48,w,22);x.fillStyle='#1A2B50';x.font='700 30px Pretendard, "Malgun Gothic", sans-serif';x.textAlign='right';x.fillText(a.a+' '+a.aName,240,by+i*48+22);x.textAlign='left';x.fillText(a.bName+' '+a.b,840,by+i*48+22);x.textAlign='center';});
     }
     if(resWish){block(resNow,'지금의 나',270,'#1A6EFF');block(resWish,'되고 싶은 나',790,'#B07200');}
-    else{block(resNow,'지금의 나',380,'#1A6EFF');x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('한 달 뒤에 다시 해 보세요.',W/2,1000);}
-    x.fillStyle='#5B6885';x.font='400 26px Pretendard, "Malgun Gothic", sans-serif';x.fillText(today()+' · 자활전문강사 김태균 · 판단은 사람이 해요',W/2,H-100);
+    else{block(resNow,'지금의 나',380,'#1A6EFF');x.fillStyle='#5B6885';x.font='400 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('6개월 뒤에 다시 해 보세요.',W/2,1000);}
+    x.fillStyle='#1A2B50';x.font='700 30px Pretendard, "Malgun Gothic", sans-serif';x.fillText('결과 코드 '+myCode()+' · 다음 점검 '+iso(plusMonths(6)).replace(/-/g,'.'),W/2,H-150);
+    x.fillStyle='#5B6885';x.font='400 26px Pretendard, "Malgun Gothic", sans-serif';x.fillText('자활전문강사 김태균 · 굿균 · 판단은 사람이 해요',W/2,H-100);
     return cv.toDataURL('image/png');
   }
-  $('btnCard').onclick=function(){var a=document.createElement('a');a.href=drawCard();a.download='AI동료유형_'+resNow.code+(resWish?'_'+resWish.code:'')+'.png';document.body.appendChild(a);a.click();a.remove();$('copyNote').textContent='카드 그림을 저장했어요.';};
+  $('btnCard').onclick=function(){var a=document.createElement('a');a.href=drawCard();a.download='AI동료네글자_'+resNow.code+(resWish?'_'+resWish.code:'')+'.png';document.body.appendChild(a);a.click();a.remove();$('copyNote').textContent='카드 그림을 저장했어요.';};
   $('btnCopy').onclick=function(){
-    var t='AI 동료 유형 — 지금의 나: '+resNow.code+' '+B.types[resNow.code].name+(resWish?' / 되고 싶은 나: '+resWish.code+' '+B.types[resWish.code].name:'')+' ('+today()+')';
-    try{navigator.clipboard.writeText(t).then(function(){$('copyNote').textContent='복사했어요: '+t;},function(){prompt('복사하세요',t);});}catch(e){prompt('복사하세요',t);}
+    var t='나의 AI는 '+resNow.code+' '+B.types[resNow.code].name+(resWish?' / 되고 싶은 나: '+resWish.code+' '+B.types[resWish.code].name:'')+' · 결과 코드 '+myCode();
+    copyText(t,function(){$('copyNote').textContent='복사했어요: '+t;});
   };
   $('btnWish').onclick=function(){start('wish');};
   $('btnSkipWish').onclick=function(){$('wishAsk').hidden=true;};
@@ -317,35 +452,153 @@ footer p{margin:2px 0}
   $('btnStart').onclick=function(){start('now');};
   $('btnHistClear').onclick=function(){if(!confirm('이 폰에 남은 지난 결과를 모두 지울까요?'))return;hist=[];save(HK,hist);renderHist();};
 
-  /* 우리 센터 */
+  /* 우리 기관 */
   var org=load(OK,[]),cur={};
   $('pick').innerHTML=B.axes.map(function(a){return '<button type="button" data-k="'+a.k+'" data-v="'+a.a+'">'+a.a+'<small>'+a.aName+'</small></button><button type="button" data-k="'+a.k+'" data-v="'+a.b+'">'+a.b+'<small>'+a.bName+'</small></button>';}).join('');
-  // 2열씩 축 순서대로 보이도록 재배열
   (function(){var p=$('pick');var btns=Array.prototype.slice.call(p.children);p.innerHTML='';p.style.gridTemplateColumns='repeat(2,1fr)';btns.forEach(function(b){p.appendChild(b);});})();
   $('pick').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;cur[b.dataset.k]=b.dataset.v;$('pick').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',cur[x.dataset.k]===x.dataset.v);});$('btnAddPerson').disabled=Object.keys(cur).length<4;});
   function orgCode(){return B.axes.map(function(a){return cur[a.k];}).join('');}
   $('btnAddPerson').onclick=function(){org.push(orgCode());save(OK,org);cur={};$('pick').querySelectorAll('button').forEach(function(x){x.classList.remove('on');});$('btnAddPerson').disabled=true;renderOrg();};
+  $('btnOrgPaste').onclick=function(){
+    var n=0;$('orgPaste').value.split(/\n+/).forEach(function(line){var p=parseCode(line);if(p){org.push(p.now);n++;}});
+    if(!n){$('orgCount').textContent='읽을 수 있는 네 글자가 없어요.';return;}
+    save(OK,org);$('orgPaste').value='';renderOrg();$('orgCount').textContent+=' (방금 '+n+'명 넣음)';
+  };
+  var firstBoxes=[];
+  function firstRules(pct){
+    var picks=[];
+    B.axes.forEach(function(a){var pa=pct[a.k],letter=pa>=50?a.a:a.b,strength=Math.abs(pa-50);var fr=B.sheet.firstRules[letter];picks.push({box:fr.box,why:fr.why,s:strength+(letter==='T'||letter==='M'||letter==='D'?20:0)});});
+    picks.sort(function(x,y){return y.s-x.s;});var out=[],seen={};
+    picks.forEach(function(p){if(out.length<3&&!seen[p.box]){seen[p.box]=1;out.push(p);}});
+    return out;
+  }
   function renderOrg(){
     $('people').innerHTML=org.map(function(c,i){return '<span>'+c+'<b data-i="'+i+'" title="빼기">×</b></span>';}).join('');
     $('people').querySelectorAll('b').forEach(function(b){b.onclick=function(){org.splice(+b.dataset.i,1);save(OK,org);renderOrg();};});
     $('orgCount').textContent=org.length?org.length+'명 모였어요.':'아직 아무도 없어요.';
-    if(org.length<2){$('orgResult').hidden=true;return;}
-    var code='',bars='';
-    B.axes.forEach(function(a,i){var na=org.filter(function(c){return c[i]===a.a;}).length,nb=org.length-na,left=na>=nb,pa=Math.round(na/org.length*100);code+=left?a.a:a.b;
+    if(org.length<2){$('orgResult').hidden=true;firstBoxes=[];return;}
+    var code='',bars='',pct={};
+    B.axes.forEach(function(a,i){var na=org.filter(function(c){return c[i]===a.a;}).length,nb=org.length-na,left=na>=nb,pa=Math.round(na/org.length*100);pct[a.k]=pa;code+=left?a.a:a.b;
       bars+='<div class="bar"><span class="l'+(left?' on':'')+'">'+a.a+'<small>'+a.aName+'</small></span><span class="t"><i style="'+(left?'left:0;width:'+pa+'%':'right:0;width:'+(100-pa)+'%')+'"></i></span><span class="r'+(left?'':' on')+'">'+a.b+'<small>'+a.bName+'</small></span><span style="grid-column:1/-1;text-align:center;font-size:.78rem;color:var(--muted)">'+a.name+' — '+a.aName+' '+pa+'% · '+a.bName+' '+(100-pa)+'%</span></div>';});
     var t=B.types[code],says=code.split('').map(function(ch){return B.orgSay[ch];}).join(' ');
     var cnt={};org.forEach(function(c){cnt[c]=(cnt[c]||0)+1;});var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a];}).slice(0,3);
+    var first=firstRules(pct);firstBoxes=first.map(function(f){return f.box;});
     $('orgResult').hidden=false;
-    $('orgResult').innerHTML='<p class="sub">우리 센터 유형 ('+org.length+'명, 축마다 다수결)</p><p class="type">'+code+'</p><p class="tname">'+esc(t.name)+' 센터</p><p class="tline">'+esc(says)+'</p><div class="bars">'+bars+'</div><p class="note">많이 나온 유형: '+top.map(function(c){return '<b>'+c+'</b> '+esc(B.types[c].name)+' '+cnt[c]+'명';}).join(' · ')+'</p><div class="gc"><img src="img/think.png" alt=""><p>굿균: 「우리 센터에서 마지막 도장은 누가 찍나요? 그걸 정해 두면 저도 마음이 편해요.」</p></div>';
+    $('orgResult').innerHTML='<p class="sub">우리 기관 네 글자 ('+org.length+'명, 축마다 다수결) — 점수가 아니라 출발점이에요</p><p class="type">'+code+'</p><p class="tname">'+esc(t.name)+' 기관</p><p class="tline">'+esc(says)+'</p><div class="bars">'+bars+'</div><p class="note">많이 나온 유형: '+top.map(function(c){return '<b>'+c+'</b> '+esc(B.types[c].name)+' '+cnt[c]+'명';}).join(' · ')+'</p>'+
+      '<b style="display:block;margin-top:12px">이 조합이면 먼저 정할 기준 셋 (출발점)</b><div class="first">'+first.map(function(f){return '<div><b>'+esc(B.sheet.boxNames[f.box])+'</b>'+esc(f.why)+'</div>';}).join('')+'</div>'+
+      '<div class="row"><button class="btn main" type="button" id="btnOrgToSheet">이 출발점으로 기준 한 장 만들기</button></div>'+
+      '<div class="gc"><img src="img/think.png" alt=""><p>굿균: 「우리 기관에서 마지막 도장은 누가 찍나요? 그걸 정해 두면 저도 마음이 편해요.」</p></div>';
+    $('btnOrgToSheet').onclick=function(){SH.hint=firstBoxes.slice();saveSheet();go('sheet');renderSheet();};
   }
   renderOrg();
   $('btnOrgClear').onclick=function(){if(!confirm('모은 글자를 모두 지울까요?'))return;org=[];save(OK,org);renderOrg();};
   ['btnOrgGo','btnOrgGo2','btnOrgGo3'].forEach(function(id){$(id).onclick=function(){go('org');};});
   ['btnAboutGo','btnAboutGo2'].forEach(function(id){$(id).onclick=function(){go('about');};});
-  $('btnOrgBack').onclick=$('btnAboutBack').onclick=function(){go('intro');};
+  ['btnSheetGo','btnSheetGo2','btnSheetGo3'].forEach(function(id){$(id).onclick=function(){go('sheet');renderSheet();};});
+  $('btnOrgBack').onclick=$('btnAboutBack').onclick=$('btnSheetBack').onclick=function(){go('intro');};
 
-  var h=location.hash.slice(1);
-  if(h==='org')go('org');else if(h==='about')go('about');
+  /* ---------- 우리 기관 AI 기준 한 장 ---------- */
+  var S=B.sheet;
+  function freshSheet(){return {step:0,who:'',vorg:'',name:'',maker:'',startDate:'',info:{},work:{},f:{f1:'',svc:[],acc:'',set:'',r3:'',y3:'',g3:'',a4:'',b4:'',how4:'',c4:'',rule5:'',resp5:'',do6:'',who6:'',f7:'',q1:'',q2:'',q3:''},months:6,hint:[]};}
+  var SH=load(SK,null)||freshSheet();if(!SH.f)SH=freshSheet();
+  function saveSheet(){save(SK,SH);}
+  var STEPS=['0 누구의 한 장','1 정보 신호등','2 일의 신호등','3 양식 7칸','4 한 장 완성'];
+  function stepDone(i){if(i===0)return !!(SH.who&&(SH.who==='mine'||SH.vorg));if(i===1)return Object.keys(SH.info).length>=S.infoCards.length;if(i===2)return Object.keys(SH.work).length>=S.workCards.length;if(i===3)return !!(SH.f.f1&&SH.f.rule5);return false;}
+  function orgTitle(){if(SH.who==='virtual'){var v=S.virtualOrgs.filter(function(o){return o.k===SH.vorg;})[0];return v?v.name:'가상 기관';}return SH.name||'○○기관';}
+  function hintHTML(){if(SH.who!=='virtual')return '';var v=S.virtualOrgs.filter(function(o){return o.k===SH.vorg;})[0];if(!v)return '';return '<div class="hintbox"><b>가상 기관 「'+esc(v.name)+'」 상황</b> (연습용, 전부 가상)<ul>'+v.hint.map(function(h){return '<li>'+esc(h)+'</li>';}).join('')+'</ul></div>';}
+  function listByLevel(map,cards,lv){return cards.map(function(c,i){return map[i]===lv?c:null;}).filter(Boolean);}
+  function renderSheet(){
+    $('steps').innerHTML=STEPS.map(function(s,i){return '<button type="button" data-i="'+i+'" class="'+(SH.step===i?'on':stepDone(i)?'done':'')+'">'+s+(stepDone(i)&&SH.step!==i?' ✓':'')+'</button>';}).join('');
+    $('steps').querySelectorAll('button').forEach(function(b){b.onclick=function(){SH.step=+b.dataset.i;saveSheet();renderSheet();};});
+    var box=$('sheetBox'),h='';
+    if(SH.step===0){
+      h='<div class="card"><b>누구의 한 장인가요?</b><div class="row"><button class="btn'+(SH.who==='mine'?' main':'')+'" type="button" id="whoMine">우리 기관</button><button class="btn'+(SH.who==='virtual'?' main':'')+'" type="button" id="whoVirtual">가상 기관으로 연습 (조별)</button></div>';
+      if(SH.who==='mine')h+='<label class="note" style="display:block;margin-top:12px">기관 이름 (인쇄물 제목에 들어가요. 안 적어도 돼요)</label><input class="in" id="orgName" value="'+esc(SH.name)+'" placeholder="예: ○○종합사회복지관">';
+      if(SH.who==='virtual')h+='<p class="note">조별로 하나 골라 같이 채워요. 인물·숫자는 전부 가상이에요.</p><div class="vorg">'+S.virtualOrgs.map(function(o){return '<button type="button" data-v="'+o.k+'" class="'+(SH.vorg===o.k?'on':'')+'"><b>'+o.k+'. '+esc(o.name)+'</b>'+esc(o.hint[0])+'</button>';}).join('')+'</div>'+hintHTML();
+      h+='<div class="row"><button class="btn main" type="button" id="toStep1"'+(stepDone(0)?'':' disabled')+'>다음: 정보 신호등 →</button></div></div>';
+    } else if(SH.step===1){
+      h='<div class="card"><b>1. 정보 신호등 — 이걸 AI에 넣어도 될까?</b><p class="sub" style="margin:6px 0 0">카드마다 하나를 눌러요. 빨강 넣지 않는다 · 노랑 가리고·바꾸고·일반화해서 · 초록 그대로. 갈리는 카드가 곧 이야기할 거리예요.</p>'+hintHTML()+'<div class="lgd"><span><i style="background:var(--r)"></i>빨강 넣지 않는다</span><span><i style="background:var(--y)"></i>노랑 가리고·바꿔서</span><span><i style="background:var(--g)"></i>초록 그대로</span></div><div class="cards3">'+
+        S.infoCards.map(function(c,i){var v=SH.info[i];return '<div class="c3'+(v?' set':'')+'"><span>'+(i+1)+'. '+esc(c)+'</span><span class="lv">'+S.infoLevels.map(function(l){return '<button type="button" data-i="'+i+'" data-l="'+l[0]+'" class="'+l[0]+(v===l[0]?' on':'')+'">'+l[1].slice(0,2)+'</button>';}).join('')+'</span></div>';}).join('')+
+        '</div><p class="note" id="infoLeft"></p><div class="row"><button class="btn" type="button" id="toStep0">← 앞</button><button class="btn main" type="button" id="toStep2">다음: 일의 신호등 →</button></div></div>';
+    } else if(SH.step===2){
+      h='<div class="card"><b>2. 일의 신호등 — 이 일을 AI에 맡길까?</b><p class="sub" style="margin:6px 0 0">맡긴다 · 확인하고 쓴다 · 맡기지 않는다. 갈리면 아래 세 질문으로 다시 봐요.</p>'+hintHTML()+'<div class="judge"><b>판정 3문 — 갈린 카드를 다시 볼 안경</b><ol>'+S.judge.map(function(q){return '<li>'+esc(q)+'</li>';}).join('')+'</ol></div><div class="lgd"><span><i style="background:var(--g)"></i>맡긴다</span><span><i style="background:var(--y)"></i>확인하고 쓴다</span><span><i style="background:var(--r)"></i>맡기지 않는다</span></div><div class="cards3">'+
+        S.workCards.map(function(c,i){var v=SH.work[i];return '<div class="c3'+(v?' set':'')+'"><span>'+(i+1)+'. '+esc(c)+'</span><span class="lv">'+S.workLevels.map(function(l){return '<button type="button" data-i="'+i+'" data-l="'+l[0]+'" class="'+l[0]+(v===l[0]?' on':'')+'">'+(l[0]==='A'?'맡김':l[0]==='B'?'확인':'안 맡김')+'</button>';}).join('')+'</span></div>';}).join('')+
+        '</div><p class="note" id="workLeft"></p><div class="row"><button class="btn" type="button" id="toStep1b">← 앞</button><button class="btn main" type="button" id="toStep3">다음: 양식 7칸 →</button></div></div>';
+    } else if(SH.step===3){
+      var f=SH.f,hi=function(n){return SH.hint&&SH.hint.indexOf(n)>=0?' hi':'';};
+      if(!f.r3&&!f.y3&&!f.g3&&Object.keys(SH.info).length){f.r3=listByLevel(SH.info,S.infoCards,'R').join('\n');f.y3=listByLevel(SH.info,S.infoCards,'Y').join('\n');f.g3=listByLevel(SH.info,S.infoCards,'G').join('\n');}
+      if(!f.a4&&!f.b4&&!f.c4&&Object.keys(SH.work).length){f.a4=listByLevel(SH.work,S.workCards,'A').join('\n');f.b4=listByLevel(SH.work,S.workCards,'B').join('\n');f.c4=listByLevel(SH.work,S.workCards,'C').join('\n');}
+      h='<div class="card"><b>3. 양식 7칸 — 질문에 답하면 칸이 차요</b><p class="sub" style="margin:6px 0 0">③④는 방금 나눈 카드가 미리 들어가 있어요. 고쳐 써도 돼요.'+(SH.hint&&SH.hint.length?' 파란 테두리는 「먼저 정할 기준 셋」이에요.':'')+'</p>'+hintHTML()+
+        '<div class="grid2" style="margin-top:12px"><div><label>만든 사람 (직위만)</label><input class="in" data-f="maker" value="'+esc(SH.maker)+'" placeholder="예: 사례관리팀장, 총무"></div><div><label>시행일</label><input class="in" type="date" data-f="startDate" value="'+esc(SH.startDate)+'"></div></div>'+
+        '<div class="fbox'+hi(1)+'"><h3>① 우리가 지키는 것</h3><p class="q">AI를 쓰더라도, 우리 기관이 끝까지 지키고 싶은 것 한 가지는?</p><textarea class="in" data-k="f1" placeholder="예: 이용자와 마주 앉는 시간. AI로 아낀 시간은 이용자에게 돌려준다.">'+esc(f.f1)+'</textarea></div>'+
+        '<div class="fbox'+hi(2)+'"><h3>② 쓰는 도구와 계정</h3><p class="q">업무에 쓸 수 있는 AI 서비스와 계정은? 쓰기 전에 꼭 해 둘 설정은?</p><label>서비스 (여러 개)</label><div class="chips" id="svcChips">'+S.services.map(function(s){return '<button type="button" data-s="'+esc(s)+'" class="'+(f.svc.indexOf(s)>=0?'on':'')+'">'+esc(s)+'</button>';}).join('')+'</div><label>계정</label><div class="chips" id="accChips">'+S.accounts.map(function(s){return '<button type="button" data-s="'+esc(s)+'" class="'+(f.acc===s?'on':'')+'">'+esc(s)+'</button>';}).join('')+'</div><label>쓰기 전 설정</label><input class="in" data-k="set" value="'+esc(f.set)+'" placeholder="예: 입력 내용 학습 활용 끄기, 대화 기록 설정 확인"></div>'+
+        '<div class="fbox'+hi(3)+'"><h3>③ 정보 신호등: 무엇을 넣어도 되나</h3><p class="q">넣지 않을 정보 / 가려서 넣을 정보 / 그대로 넣어도 되는 정보</p><div class="tri"><div class="R"><b>빨강 · 넣지 않는다</b><textarea class="in" data-k="r3">'+esc(f.r3)+'</textarea></div><div class="Y"><b>노랑 · 가리고·바꾸고·일반화해서</b><textarea class="in" data-k="y3">'+esc(f.y3)+'</textarea></div><div class="G"><b>초록 · 그대로</b><textarea class="in" data-k="g3">'+esc(f.g3)+'</textarea></div></div></div>'+
+        '<div class="fbox'+hi(4)+'"><h3>④ 일의 신호등: 무엇을 맡기나</h3><p class="q">맡기는 일 / 맡기되 반드시 확인하고 쓰는 일(누가, 무엇으로) / 맡기지 않는 일</p><div class="tri"><div class="A"><b>맡긴다</b><textarea class="in" data-k="a4">'+esc(f.a4)+'</textarea></div><div class="B"><b>확인하고 쓴다</b><textarea class="in" data-k="b4">'+esc(f.b4)+'</textarea><input class="in" data-k="how4" value="'+esc(f.how4)+'" placeholder="누가, 무엇으로 확인? 예: 담당자가 원문으로"></div><div class="C"><b>맡기지 않는다</b><textarea class="in" data-k="c4">'+esc(f.c4)+'</textarea></div></div></div>'+
+        '<div class="fbox'+hi(5)+'"><h3>⑤ 확인과 책임</h3><p class="q">AI가 만든 결과물을 밖으로 내보내기 전에 누가, 무엇을 확인하나? 최종 책임은?</p><label>확인 원칙</label><input class="in" data-k="rule5" value="'+esc(f.rule5)+'" placeholder="예: 숫자·제도는 원문 확인, 대외 문서는 결재자 확인"><label>최종 책임</label><input class="in" data-k="resp5" value="'+esc(f.resp5)+'" placeholder="예: 결재한 사람. 「AI가 그랬어요」는 이유가 되지 않는다"></div>'+
+        '<div class="fbox'+hi(6)+'"><h3>⑥ 일이 생겼을 때</h3><p class="q">넣으면 안 되는 정보를 넣었거나, AI 답에 개인정보가 섞여 나오면?</p><label>바로 할 일</label><input class="in" data-k="do6" value="'+esc(f.do6)+'" placeholder="예: 공유 중단 → 화면 캡처 → 대화·파일 삭제 → 당일 알리기"><label>알릴 사람 (직위)</label><input class="in" data-k="who6" value="'+esc(f.who6)+'" placeholder="예: 팀장, 개인정보 보호책임자(사무국장)"></div>'+
+        '<div class="fbox'+hi(7)+'"><h3>⑦ 함께 배우고, 아낀 시간 돌려주기</h3><p class="q">AI로 아낀 시간은 어디에 쓰나? 성공담·실패담은 어디서 나누나?</p><textarea class="in" data-k="f7" placeholder="예: 매달 팀 회의 마지막 10분 「이번 달 AI 성공담·실패담」. 아낀 시간은 이용자 개별 면담에 우선.">'+esc(f.f7)+'</textarea></div>'+
+        '<div class="fbox"><h3>다시 보는 날 · 직원과 고칠 질문 3개</h3><label>다시 보는 날 (시행 후 몇 개월)</label><div class="chips" id="monChips">'+[3,6,12].map(function(m){return '<button type="button" data-m="'+m+'" class="'+(SH.months===m?'on':'')+'">'+m+'개월</button>';}).join('')+'</div><label>질문 ①</label><input class="in" data-k="q1" value="'+esc(f.q1)+'" placeholder="예: 빨강 목록에서 빠진 게 있나요?"><label>질문 ②</label><input class="in" data-k="q2" value="'+esc(f.q2)+'" placeholder="예: 이 기준 때문에 오히려 불편한 일이 있나요?"><label>질문 ③</label><input class="in" data-k="q3" value="'+esc(f.q3)+'" placeholder="예: 아낀 시간, 어디에 쓰고 싶나요?"></div>'+
+        '<div class="row"><button class="btn" type="button" id="toStep2b">← 앞</button><button class="btn main" type="button" id="toStep4">다음: 한 장 완성 →</button></div></div>';
+    } else {
+      h='<div class="card"><b>4. 한 장 완성</b><p class="sub" style="margin:6px 0 0">인쇄하면 A4 한 장이에요. 글로 복사해 기관 문서에 붙이거나, 파일로 저장해 두었다가 동료와 이어서 채울 수 있어요.</p>'+
+        '<div class="row"><button class="btn main" type="button" id="btnPrint">인쇄 · PDF로 저장</button><button class="btn" type="button" id="btnSheetCopy">글로 복사</button><button class="btn" type="button" id="btnSheetSave">파일로 저장</button><button class="btn" type="button" id="btnSheetLoad">파일 불러오기</button></div><input type="file" id="sheetFile" accept=".json,application/json" hidden><p class="note" id="sheetNote"></p>'+
+        '<div class="fbox" style="margin-top:14px"><h3>'+esc(orgTitle())+' AI 사용 기준 <small style="font-weight:500;color:var(--muted)">· 미리보기</small></h3><div id="preview" style="font-size:.9rem;white-space:pre-line;margin-top:6px">'+esc(sheetText())+'</div></div>'+
+        '<p class="ask2">도장은 아직 찍지 마세요. 돌아가서 동료들과 함께 고치고, 다시 보는 날에 또 고치는 한 장이에요.</p><div class="row"><button class="btn" type="button" id="toStep3b">← 앞</button></div></div>';
+    }
+    box.innerHTML=h;
+    /* 단계별 단추 */
+    var q=function(id){return document.getElementById(id);};
+    if(q('whoMine'))q('whoMine').onclick=function(){SH.who='mine';saveSheet();renderSheet();};
+    if(q('whoVirtual'))q('whoVirtual').onclick=function(){SH.who='virtual';saveSheet();renderSheet();};
+    if(q('orgName'))q('orgName').oninput=function(){SH.name=this.value;saveSheet();q('toStep1').disabled=!stepDone(0);};
+    box.querySelectorAll('.vorg button').forEach(function(b){b.onclick=function(){SH.vorg=b.dataset.v;saveSheet();renderSheet();};});
+    if(q('toStep1'))q('toStep1').onclick=function(){SH.step=1;saveSheet();renderSheet();};
+    if(q('toStep0'))q('toStep0').onclick=function(){SH.step=0;saveSheet();renderSheet();};
+    if(q('toStep2'))q('toStep2').onclick=function(){SH.step=2;saveSheet();renderSheet();};
+    if(q('toStep1b'))q('toStep1b').onclick=function(){SH.step=1;saveSheet();renderSheet();};
+    if(q('toStep3'))q('toStep3').onclick=function(){SH.step=3;saveSheet();renderSheet();};
+    if(q('toStep2b'))q('toStep2b').onclick=function(){SH.step=2;saveSheet();renderSheet();};
+    if(q('toStep4'))q('toStep4').onclick=function(){SH.step=4;saveSheet();renderSheet();};
+    if(q('toStep3b'))q('toStep3b').onclick=function(){SH.step=3;saveSheet();renderSheet();};
+    box.querySelectorAll('.c3 .lv button').forEach(function(b){b.onclick=function(){var map=SH.step===1?SH.info:SH.work;map[b.dataset.i]=b.dataset.l;saveSheet();var row=b.closest('.c3');row.classList.add('set');row.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});leftNote();};});
+    function leftNote(){if(q('infoLeft'))q('infoLeft').textContent=(S.infoCards.length-Object.keys(SH.info).length)+'장 남았어요. 다 안 눌러도 넘어갈 수 있어요.';if(q('workLeft'))q('workLeft').textContent=(S.workCards.length-Object.keys(SH.work).length)+'장 남았어요.';}
+    leftNote();
+    box.querySelectorAll('[data-k]').forEach(function(el){el.oninput=function(){SH.f[el.dataset.k]=el.value;saveSheet();};});
+    box.querySelectorAll('[data-f]').forEach(function(el){el.oninput=function(){SH[el.dataset.f]=el.value;saveSheet();};});
+    if(q('svcChips'))q('svcChips').querySelectorAll('button').forEach(function(b){b.onclick=function(){var i=SH.f.svc.indexOf(b.dataset.s);if(i>=0)SH.f.svc.splice(i,1);else SH.f.svc.push(b.dataset.s);b.classList.toggle('on');saveSheet();};});
+    if(q('accChips'))q('accChips').querySelectorAll('button').forEach(function(b){b.onclick=function(){SH.f.acc=b.dataset.s;q('accChips').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});saveSheet();};});
+    if(q('monChips'))q('monChips').querySelectorAll('button').forEach(function(b){b.onclick=function(){SH.months=+b.dataset.m;q('monChips').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});saveSheet();};});
+    if(q('btnPrint'))q('btnPrint').onclick=function(){$('printArea').innerHTML=printHTML();window.print();};
+    if(q('btnSheetCopy'))q('btnSheetCopy').onclick=function(){copyText(sheetText(),function(){q('sheetNote').textContent='글로 복사했어요. 기관 문서에 붙여 넣으세요.';});};
+    if(q('btnSheetSave'))q('btnSheetSave').onclick=function(){dl('AI기준한장_'+orgTitle().replace(/\s+/g,'')+'_'+iso(new Date())+'.json',JSON.stringify(SH,null,1),'application/json');q('sheetNote').textContent='파일로 저장했어요. 다음에 「파일 불러오기」로 이어서 채울 수 있어요.';};
+    if(q('btnSheetLoad'))q('btnSheetLoad').onclick=function(){q('sheetFile').click();};
+    if(q('sheetFile'))q('sheetFile').onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!o||!o.f)throw 0;SH=o;saveSheet();renderSheet();}catch(e){q('sheetNote').textContent='읽을 수 없는 파일이에요.';}};r.readAsText(f);};
+  }
+  function reviewDate(){var base=SH.startDate?new Date(SH.startDate):new Date();base.setMonth(base.getMonth()+(SH.months||6));return iso(base).replace(/-/g,'.');}
+  function sheetText(){
+    var f=SH.f,L=function(t){return t?t:'(아직 안 적음)';};
+    return orgTitle()+' AI 사용 기준\n만든 날 '+today()+' · 만든 사람 '+L(SH.maker)+' · 시행일 '+L(SH.startDate)+'\n\nAI는 성실하고 아는 것 많지만 우리 일은 처음인 신입 동료입니다. 이 한 장은 그 동료와 함께 일하는 우리를 위한 업무 안내서입니다.\n\n① 우리가 지키는 것\n'+L(f.f1)+'\n\n② 쓰는 도구와 계정\n서비스: '+L(f.svc.join(', '))+' / 계정: '+L(f.acc)+'\n쓰기 전 설정: '+L(f.set)+'\n\n③ 정보 신호등\n[빨강 · 넣지 않는다]\n'+L(f.r3)+'\n[노랑 · 가리고·바꾸고·일반화해서]\n'+L(f.y3)+'\n[초록 · 그대로]\n'+L(f.g3)+'\n\n④ 일의 신호등\n[맡긴다]\n'+L(f.a4)+'\n[확인하고 쓴다] '+(f.how4?'('+f.how4+')':'')+'\n'+L(f.b4)+'\n[맡기지 않는다]\n'+L(f.c4)+'\n\n⑤ 확인과 책임\n확인 원칙: '+L(f.rule5)+'\n최종 책임: '+L(f.resp5)+'\n\n⑥ 일이 생겼을 때\n바로 할 일: '+L(f.do6)+'\n알릴 사람: '+L(f.who6)+'\n\n⑦ 함께 배우고, 아낀 시간 돌려주기\n'+L(f.f7)+'\n\n다시 보는 날: '+reviewDate()+' (시행 후 '+(SH.months||6)+'개월)\n직원과 고칠 질문: ① '+L(f.q1)+' ② '+L(f.q2)+' ③ '+L(f.q3)+'\n\n이 양식은 법률 자문이 아닙니다. 개인정보 처리의 최종 판단은 기관 개인정보 보호책임자·법인과 확인하세요. 참고: 개인정보보호위원회 「생성형 AI 서비스 이용자를 위한 개인정보 보호 가이드」(2026.5). AI 동료 네 글자 · 굿균'+(SH.who==='virtual'?'\n※ 가상 기관으로 연습한 한 장입니다. 여러분 기관의 답은 다릅니다.':'');
+  }
+  function printHTML(){
+    var f=SH.f,P=function(t){return esc(t||'　');};
+    return '<h1>'+esc(orgTitle())+' AI 사용 기준</h1><p class="meta">만든 날 '+today()+' · 만든 사람 '+P(SH.maker)+' · 시행일 '+P(SH.startDate)+(SH.who==='virtual'?' · <b>가상 기관 연습용</b>':'')+'</p>'+
+      '<p class="intro">AI는 성실하고 아는 것 많지만 우리 일은 처음인 <b>신입 동료</b>입니다. 이 한 장은 그 동료와 함께 일하는 우리를 위한 업무 안내서입니다.</p>'+
+      '<div class="pb"><h2>① 우리가 지키는 것</h2><p>'+P(f.f1)+'</p></div>'+
+      '<div class="pb"><h2>② 쓰는 도구와 계정</h2><p>서비스: '+P(f.svc.join(', '))+' / 계정: '+P(f.acc)+'\n쓰기 전 설정: '+P(f.set)+'</p></div>'+
+      '<div class="pb"><h2>③ 정보 신호등 — 무엇을 넣어도 되나</h2><div class="pt"><div class="R"><b>빨강 · 넣지 않는다</b>'+P(f.r3)+'</div><div class="Y"><b>노랑 · 가리고·바꾸고·일반화해서</b>'+P(f.y3)+'</div><div class="G"><b>초록 · 그대로</b>'+P(f.g3)+'</div></div></div>'+
+      '<div class="pb"><h2>④ 일의 신호등 — 무엇을 맡기나</h2><div class="pt"><div class="G"><b>맡긴다</b>'+P(f.a4)+'</div><div class="Y"><b>확인하고 쓴다'+(f.how4?' ('+esc(f.how4)+')':'')+'</b>'+P(f.b4)+'</div><div class="R"><b>맡기지 않는다</b>'+P(f.c4)+'</div></div></div>'+
+      '<div class="pb"><h2>⑤ 확인과 책임</h2><p>확인 원칙: '+P(f.rule5)+'\n최종 책임: '+P(f.resp5)+'</p></div>'+
+      '<div class="pb"><h2>⑥ 일이 생겼을 때</h2><p>바로 할 일: '+P(f.do6)+'\n알릴 사람: '+P(f.who6)+'</p></div>'+
+      '<div class="pb"><h2>⑦ 함께 배우고, 아낀 시간 돌려주기</h2><p>'+P(f.f7)+'</p></div>'+
+      '<div class="pb"><h2>다시 보는 날 '+reviewDate()+' (시행 후 '+(SH.months||6)+'개월) · 직원과 고칠 질문 3개</h2><p>① '+P(f.q1)+'\n② '+P(f.q2)+'\n③ '+P(f.q3)+'</p></div>'+
+      '<p class="foot">이 양식은 법률 자문이 아닙니다. 개인정보 처리의 최종 판단은 기관 개인정보 보호책임자·법인과 확인하세요. 참고: 개인정보보호위원회 「생성형 AI 서비스 이용자를 위한 개인정보 보호 가이드」(2026.5) · 디지털플랫폼정부위원회 공공 AI 가이드라인 2.0 · AI 동료 네 글자 · 자활전문강사 김태균 · 굿균</p>';
+  }
+  $('btnSheetReset').onclick=function(){if(!confirm('기준 한 장 초안을 모두 지우고 처음부터 할까요?'))return;SH=freshSheet();saveSheet();renderSheet();};
+
+  /* 주소로 바로 열기: #org · #sheet · #about · ?v=A(가상 기관) */
+  var h=location.hash.slice(1),qs=new URLSearchParams(location.search);
+  if(qs.get('v')&&S.virtualOrgs.some(function(o){return o.k===qs.get('v').toUpperCase();})){SH.who='virtual';SH.vorg=qs.get('v').toUpperCase();if(SH.step===0)SH.step=1;saveSheet();}
+  if(h==='org')go('org');else if(h==='about')go('about');else if(h==='sheet'){go('sheet');renderSheet();}
 })();
 </script>
 </body>
